@@ -1,9 +1,9 @@
 <nav class="sidebar" id="sidebar" aria-label="모듈 네비게이션">
-  <a class="brand-mark" href="{{ "/" | relURL }}">
+  <a class="brand-mark" href="{{ site.Home.RelPermalink }}">
     <span class="brand-gopher">Go</span>
     <span>Go <span class="go">Ready</span></span>
   </a>
-  <a class="nav-dash{{ if .IsHome }} active{{ end }}" href="{{ "/" | relURL }}">📋 대시보드</a>
+  <a class="nav-dash{{ if .IsHome }} active{{ end }}" href="{{ site.Home.RelPermalink }}">📋 대시보드</a>
   <div class="nav-label">모듈</div>
   {{ range where site.Sections "Section" "learn" }}
     {{ range .Sections.ByWeight }}

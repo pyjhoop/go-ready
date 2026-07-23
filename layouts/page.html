@@ -1,8 +1,8 @@
 {{ define "main" }}
 <article class="lesson-view">
   <nav class="breadcrumb">
-    <a href="{{ "/" | relURL }}">대시보드</a> ›
-    <a href="{{ "/learn/" | relURL }}">학습</a> ›
+    <a href="{{ site.Home.RelPermalink }}">대시보드</a> ›
+    <a href="{{ "learn/" | relURL }}">학습</a> ›
     {{ .Params.moduleTitle }}
   </nav>
 
@@ -16,8 +16,19 @@
 
   <footer class="lesson-footer">
     <div class="pager">
-      {{ with .PrevInSection }}<a class="btn btn-ghost" href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ end }}
-      {{ with .NextInSection }}<a class="btn btn-ghost" href="{{ .RelPermalink }}">{{ .Title }} →</a>{{ end }}
+      {{- /* Hugo의 Prev/NextInSection은 방향이 뒤집혀 헷갈린다 → weight 순으로 직접 계산 */ -}}
+      {{- $pages := .CurrentSection.RegularPages.ByWeight -}}
+      {{- $cur := .RelPermalink -}}
+      {{- $prev := false -}}
+      {{- $next := false -}}
+      {{- range $i, $p := $pages -}}
+        {{- if eq $p.RelPermalink $cur -}}
+          {{- if gt $i 0 }}{{ $prev = index $pages (sub $i 1) }}{{ end -}}
+          {{- if lt (add $i 1) (len $pages) }}{{ $next = index $pages (add $i 1) }}{{ end -}}
+        {{- end -}}
+      {{- end -}}
+      {{ with $prev }}<a class="btn btn-ghost" href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ end }}
+      {{ with $next }}<a class="btn btn-ghost" href="{{ .RelPermalink }}">{{ .Title }} →</a>{{ end }}
     </div>
     <button class="complete-toggle" type="button" data-toggle="{{ .Params.lessonID }}">완료로 표시</button>
   </footer>
