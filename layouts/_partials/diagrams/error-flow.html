@@ -1,0 +1,37 @@
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, monospace" role="img" aria-label="error가 값으로서 호출 스택을 따라 위로 반환되며 각 계층이 명시적으로 검사하는 흐름도">
+  <!-- lowest layer: source of error -->
+  <rect x="30" y="220" width="200" height="56" rx="8" fill="var(--card)" stroke="var(--border)" stroke-width="1.5"/>
+  <text x="130" y="243" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">os.Open("x")</text>
+  <text x="130" y="263" text-anchor="middle" font-size="11" fill="var(--text-muted)">(*File, error) 반환</text>
+
+  <!-- middle layer -->
+  <rect x="30" y="126" width="200" height="56" rx="8" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.5"/>
+  <text x="130" y="149" text-anchor="middle" font-size="12" font-weight="700" fill="var(--brand-dark)">loadConfig()</text>
+  <text x="130" y="169" text-anchor="middle" font-size="11" fill="var(--text)">if err != nil { return err }</text>
+
+  <!-- top layer -->
+  <rect x="30" y="32" width="200" height="56" rx="8" fill="var(--card)" stroke="var(--border)" stroke-width="1.5"/>
+  <text x="130" y="55" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">main()</text>
+  <text x="130" y="75" text-anchor="middle" font-size="11" fill="var(--text-muted)">log.Fatal(err)</text>
+
+  <!-- upward error arrows -->
+  <path d="M 130 218 L 130 186" fill="none" stroke="var(--go-blue)" stroke-width="2" marker-end="url(#eu)"/>
+  <path d="M 130 124 L 130 92" fill="none" stroke="var(--go-blue)" stroke-width="2" marker-end="url(#eu)"/>
+  <text x="150" y="206" font-size="11" fill="var(--go-blue)">err ↑</text>
+  <text x="150" y="112" font-size="11" fill="var(--go-blue)">err ↑</text>
+
+  <!-- side note -->
+  <rect x="300" y="60" width="308" height="182" rx="10" fill="#fffbeb" stroke="#fcd97a" stroke-width="1.5"/>
+  <text x="322" y="90" font-size="12.5" font-weight="700" fill="#92400e">에러는 예외가 아니라 &#39;값&#39;이다</text>
+  <text x="322" y="116" font-size="11.5" fill="#92400e">· 자동으로 위로 튀어오르지 않는다.</text>
+  <text x="322" y="138" font-size="11.5" fill="#92400e">· 각 계층이 직접 검사하고 직접 반환한다.</text>
+  <text x="322" y="160" font-size="11.5" fill="#92400e">· 제어 흐름이 코드에 그대로 보인다.</text>
+  <text x="322" y="182" font-size="11.5" fill="#92400e">· 무시하려면 _ 로 명시적으로 버려야 한다.</text>
+  <text x="322" y="212" font-size="11.5" font-weight="700" fill="#92400e">숨은 점프(throw)가 없다 = 예측 가능.</text>
+
+  <defs>
+    <marker id="eu" markerWidth="9" markerHeight="9" refX="4.5" refY="2" orient="auto">
+      <path d="M0,9 L4.5,0 L9,9 z" fill="var(--go-blue)"/>
+    </marker>
+  </defs>
+</svg>

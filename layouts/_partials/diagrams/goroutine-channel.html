@@ -1,0 +1,35 @@
+<svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, monospace" role="img" aria-label="두 goroutine이 channel을 통해 값을 주고받으며 통신하는 구조도. 송신 goroutine이 채널로 값을 보내고 수신 goroutine이 받는다">
+  <!-- sender goroutine -->
+  <rect x="30" y="90" width="150" height="70" rx="10" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.6"/>
+  <text x="105" y="118" text-anchor="middle" font-size="12" font-weight="700" fill="var(--brand-dark)">goroutine A</text>
+  <text x="105" y="140" text-anchor="middle" font-size="11" fill="var(--text)">ch &lt;- 42 (송신)</text>
+
+  <!-- channel -->
+  <rect x="250" y="80" width="140" height="90" rx="10" fill="var(--card)" stroke="var(--go-blue)" stroke-width="2"/>
+  <text x="320" y="104" text-anchor="middle" font-size="12" font-weight="700" fill="var(--go-blue)">channel</text>
+  <text x="320" y="122" text-anchor="middle" font-size="10" fill="var(--text-muted)">chan int</text>
+  <rect x="268" y="132" width="30" height="26" rx="4" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.2"/>
+  <text x="283" y="150" text-anchor="middle" font-size="11" fill="var(--brand-dark)">42</text>
+  <rect x="304" y="132" width="30" height="26" rx="4" fill="#f1f5f9" stroke="var(--border)" stroke-width="1"/>
+  <rect x="340" y="132" width="30" height="26" rx="4" fill="#f1f5f9" stroke="var(--border)" stroke-width="1"/>
+
+  <!-- receiver goroutine -->
+  <rect x="460" y="90" width="150" height="70" rx="10" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.6"/>
+  <text x="535" y="118" text-anchor="middle" font-size="12" font-weight="700" fill="var(--brand-dark)">goroutine B</text>
+  <text x="535" y="140" text-anchor="middle" font-size="11" fill="var(--text)">v := &lt;-ch (수신)</text>
+
+  <!-- arrows -->
+  <path d="M 182 125 L 246 125" fill="none" stroke="var(--go-blue)" stroke-width="2" marker-end="url(#gc)"/>
+  <path d="M 394 125 L 458 125" fill="none" stroke="var(--go-blue)" stroke-width="2" marker-end="url(#gc)"/>
+
+  <!-- caption note -->
+  <text x="320" y="205" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text)">"Don&#39;t communicate by sharing memory;</text>
+  <text x="320" y="226" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--brand-dark)">share memory by communicating."</text>
+  <text x="320" y="248" text-anchor="middle" font-size="11" fill="var(--text-muted)">unbuffered 채널은 송신·수신이 만나는 순간 값이 넘어가며 동기화된다</text>
+
+  <defs>
+    <marker id="gc" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--go-blue)"/>
+    </marker>
+  </defs>
+</svg>
