@@ -1,0 +1,31 @@
+<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, monospace" role="img" aria-label="구조체가 인터페이스가 요구하는 메서드를 모두 가지면 명시적 선언 없이 암묵적으로 인터페이스를 만족한다는 도식">
+  <!-- interface box -->
+  <rect x="380" y="40" width="230" height="120" rx="10" fill="var(--brand-soft)" stroke="var(--brand)" stroke-width="1.6"/>
+  <text x="495" y="66" text-anchor="middle" font-size="13" font-weight="700" fill="var(--brand-dark)">interface Speaker</text>
+  <line x1="400" y1="78" x2="590" y2="78" stroke="var(--brand)" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="400" y="102" font-size="12.5" fill="var(--text)">요구: Speak() string</text>
+  <text x="400" y="132" font-size="11" fill="var(--text-muted)">implements 키워드 없음</text>
+
+  <!-- struct box -->
+  <rect x="30" y="40" width="230" height="120" rx="10" fill="var(--card)" stroke="var(--go-blue)" stroke-width="1.6"/>
+  <text x="145" y="66" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text)">type Cat struct</text>
+  <line x1="50" y1="78" x2="240" y2="78" stroke="var(--go-blue)" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="50" y="102" font-size="12.5" fill="var(--text)">func (c Cat) Speak()</text>
+  <text x="50" y="122" font-size="12.5" fill="var(--text)">  string { "meow" }</text>
+  <text x="50" y="146" font-size="11" fill="var(--go-blue)">Speak()를 가짐 ✓</text>
+
+  <!-- arrow -->
+  <path d="M 268 100 L 372 100" fill="none" stroke="var(--brand)" stroke-width="2" marker-end="url(#as)"/>
+  <text x="320" y="90" text-anchor="middle" font-size="11" fill="var(--brand-dark)">자동 만족</text>
+
+  <!-- bottom note -->
+  <rect x="30" y="200" width="580" height="70" rx="10" fill="#fffbeb" stroke="#fcd97a" stroke-width="1.5"/>
+  <text x="48" y="226" font-size="12.5" font-weight="700" fill="#92400e">메서드 집합이 인터페이스를 덮으면 → 컴파일 타임에 자동으로 만족.</text>
+  <text x="48" y="250" font-size="12" fill="#92400e">Cat은 Speaker를 import할 필요도, implements를 선언할 필요도 없다.</text>
+
+  <defs>
+    <marker id="as" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="var(--brand)"/>
+    </marker>
+  </defs>
+</svg>
