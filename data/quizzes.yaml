@@ -25,3 +25,31 @@ q-m1-basics:
         - "go run은 테스트만 돌린다"
       answer: 1
       explain: "go run은 임시로 컴파일해 바로 실행하고 결과물을 남기지 않는다. go build는 배포 가능한 단일 바이너리(실행 파일)를 생성한다."
+
+q-m2:
+  title: "모듈 2 퀴즈 — 타입 · 함수 · 제어 흐름"
+  questions:
+    - q: "짧은 선언 `:=`에 대한 설명으로 옳은 것은?"
+      options:
+        - "패키지 레벨(함수 바깥)에서도 자유롭게 쓸 수 있다"
+        - "함수 안에서만 쓸 수 있고, 좌변에 새 변수가 최소 하나 있어야 한다"
+        - "상수를 선언할 때 쓴다"
+        - "타입을 항상 명시해야 한다"
+      answer: 1
+      explain: ":=는 함수 본문에서만 유효하며, 좌변이 전부 기존 변수면 'no new variables' 에러가 난다. 패키지 레벨에서는 var를 써야 한다."
+    - q: "`i`가 int, `f`가 float64일 때 `i + f`를 쓰면?"
+      options:
+        - "자동으로 float64로 변환돼 계산된다"
+        - "int로 잘려서 계산된다"
+        - "컴파일 에러가 난다"
+        - "런타임에 panic이 난다"
+      answer: 2
+      explain: "Go에는 암묵적 형 변환이 없다. 타입이 다른 변수끼리는 float64(i) + f처럼 명시적으로 변환해야 한다. 조용한 정밀도 손실을 막기 위한 의도적 설계다."
+    - q: "Go의 switch에서 각 case가 끝났을 때의 기본 동작은?"
+      options:
+        - "다음 case로 흘러내린다(fall-through)"
+        - "자동으로 break 된다"
+        - "무한 반복한다"
+        - "default로 점프한다"
+      answer: 1
+      explain: "Go의 switch는 case를 마치면 자동으로 빠져나온다. C/Java와 달리 break가 필요 없고, 반대로 흘리고 싶을 때만 fallthrough를 명시한다."
