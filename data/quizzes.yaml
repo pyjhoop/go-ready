@@ -117,3 +117,67 @@ q-m4:
         - "매번 다르다"
       answer: 1
       explain: "인터페이스는 (타입, 값) 쌍이다. nil 포인터라도 타입 칸(*MyError)이 채워지면 인터페이스 자체는 nil이 아니라서 err != nil이 참이 된다. 에러가 없으면 그냥 nil을 반환해야 한다."
+
+q-m5:
+  title: "모듈 5 퀴즈 — 에러 처리 · panic · defer"
+  questions:
+    - q: "Go에서 실패할 수 있는 함수의 관용적인 처리 방식은?"
+      options:
+        - "try/catch로 예외를 잡는다"
+        - "마지막 반환값으로 error를 돌려주고 호출부가 if err != nil로 검사한다"
+        - "실패하면 자동으로 프로그램이 종료된다"
+        - "전역 에러 플래그를 확인한다"
+      answer: 1
+      explain: "Go에는 예외가 없다. 에러는 평범한 반환값이고, 호출부가 매번 if err != nil로 직접 검사한다. 모든 실패 경로가 코드에 드러나 제어 흐름이 예측 가능하다."
+    - q: "`x := 10; defer fmt.Println(x); x = 99` 순서로 실행하면 defer는 무엇을 출력하나?"
+      options:
+        - "99 — 함수가 끝날 때의 최신 값"
+        - "10 — defer 문을 만나는 순간 인자가 평가돼 박제된다"
+        - "0 — zero value"
+        - "컴파일 에러"
+      answer: 1
+      explain: "defer의 인자는 실행 시점이 아니라 defer 문을 만나는 그 순간 평가되어 고정된다. 실행만 함수 종료로 미뤄질 뿐이다. 최신 값을 쓰려면 클로저 defer func(){ ... }()로 감싸야 한다."
+    - q: "panic과 error의 관계로 옳은 것은?"
+      options:
+        - "둘은 같은 것이고 이름만 다르다"
+        - "panic이 권장되는 일상 에러 처리 방식이다"
+        - "error는 예상 가능한 실패를 값으로 다루고, panic은 회복 불능 상태를 위한 드문 비상 수단이다"
+        - "recover는 어디서나 호출하면 panic을 잡는다"
+      answer: 2
+      explain: "error(값)는 예상 가능한 실패를 호출부가 검사해 처리한다. panic은 불변식이 깨진 회복 불능 상황을 위한 것으로, 일상 에러 처리에 쓰면 안 된다. 참고로 recover는 defer된 함수 안에서만 동작한다."
+
+q-m6:
+  title: "모듈 6 퀴즈 — 동시성: goroutine & channel"
+  questions:
+    - q: "unbuffered 채널(make(chan int))로 값을 보내면?"
+      options:
+        - "버퍼에 쌓아두고 송신자는 바로 지나간다"
+        - "수신자가 받는 바로 그 순간까지 송신이 블록된다"
+        - "즉시 실패하고 에러를 반환한다"
+        - "값이 그냥 버려진다"
+      answer: 1
+      explain: "unbuffered 채널은 용량이 0이라 송신과 수신이 랑데부(만남)해야 값이 넘어간다. 수신자가 받을 때까지 송신은 블록되고, 그래서 채널 자체가 강력한 동기화 지점이 된다."
+    - q: "main 함수에서 go f()로 goroutine을 띄운 직후 main이 반환하면?"
+      options:
+        - "goroutine이 끝날 때까지 자동으로 기다린다"
+        - "프로그램이 종료되고 아직 돌던 goroutine은 완료 보장 없이 죽는다"
+        - "goroutine이 백그라운드 프로세스로 계속 산다"
+        - "컴파일 에러가 난다"
+      answer: 1
+      explain: "main이 반환하면 프로그램이 종료되고 살아있던 goroutine은 기다려주지 않는다. time.Sleep으로 어림잡지 말고 channel이나 sync.WaitGroup으로 완료를 명시적으로 기다려야 한다."
+    - q: "여러 채널 중 먼저 준비되는 하나를 처리하고, 준비된 게 없으면 블록 대신 즉시 넘어가고 싶다. 무엇을 쓰나?"
+      options:
+        - "for 루프로 각 채널을 순서대로 폴링한다"
+        - "default case가 있는 select 문"
+        - "여러 개의 중첩된 if 문"
+        - "sync.Mutex"
+      answer: 1
+      explain: "select는 여러 채널 연산 중 준비된 하나를 고른다. default case를 넣으면 준비된 채널이 없을 때 블록하지 않고 즉시 default로 빠져 논블로킹 동작이 된다."
+    - q: "lock 없이 여러 goroutine이 같은 변수를 동시에 읽고 쓰는 데이터 레이스를 탐지하는 표준 도구는?"
+      options:
+        - "go build --strict"
+        - "go run -race (또는 go test -race)"
+        - "go vet만으로 항상 잡힌다"
+        - "런타임이 자동으로 항상 막아준다"
+      answer: 1
+      explain: "데이터 레이스는 컴파일도 되고 대개 그럴듯하게 동작하다 프로덕션에서 터진다. Go에 내장된 레이스 감지기 -race 플래그로 실행하면 충돌하는 접근을 스택과 함께 잡아준다. 동시성 코드는 반드시 -race로 검증한다."
