@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if .IsHome }}{{ site.Title }} — Go 속성 코스{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ with .Params.summary }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+  <link rel="canonical" href="{{ .Permalink }}">
+  {{ with resources.Get "css/main.css" }}<link rel="stylesheet" href="{{ .RelPermalink }}">{{ end }}
+</head>
+<body>
+<button class="hamburger" id="hamburger" aria-label="메뉴 열기">☰</button>
+<div class="mobile-overlay" id="overlay"></div>
+
+<div class="app">
+  {{ partial "sidebar.html" . }}
+  <main class="main">
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{ partial "aside.html" . }}
+</div>
+
+{{- /* 빌드 시점에 전체 레슨 목록을 주입 → 진도율 계산의 진실 원천 */ -}}
+<script type="application/json" id="lesson-manifest">
+{{- $lessons := slice -}}
+{{- range where site.RegularPages "Section" "learn" -}}
+  {{- $lessons = $lessons | append (dict "id" .Params.lessonID "title" .Title "url" .RelPermalink "module" .Params.module) -}}
+{{- end -}}
+{{- $lessons | jsonify | safeJS -}}
+</script>
+<script src="{{ "js/app.js" | relURL }}" defer></script>
+</body>
+</html>

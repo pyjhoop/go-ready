@@ -1,0 +1,18 @@
+{{ define "main" }}
+<div class="banner">
+  <h1>{{ .Title }}</h1>
+  <p>{{ .Params.summary }}</p>
+</div>
+<div class="module-card open">
+  <div class="lesson-list">
+    {{ range .Pages.ByWeight }}
+    <div class="lesson-row">
+      <button class="lesson-check" type="button" data-toggle="{{ .Params.lessonID }}" role="checkbox" aria-checked="false" aria-label="{{ .Title }} 완료 표시"></button>
+      <a class="lesson-open" href="{{ .RelPermalink }}"><span class="lt">{{ .Title }}</span></a>
+      <span class="type-pill type-{{ .Params.type }}">{{ .Params.type }}</span>
+      <span class="est">{{ .Params.estMin }}분</span>
+    </div>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

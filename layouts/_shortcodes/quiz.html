@@ -1,0 +1,28 @@
+{{- /*
+  퀴즈 — 문항 데이터는 data/quizzes.yaml (단일 진실 원천)
+  마크업은 빌드타임에 굽고, 정오답 판정만 클라이언트 JS가 맡는다.
+  사용: {{< quiz id="q-m3" >}}
+*/ -}}
+{{- $id := .Get "id" -}}
+{{- $quiz := index hugo.Data.quizzes $id -}}
+{{- with $quiz -}}
+<div class="block">
+  <section class="quiz" data-quiz="{{ $id }}">
+    <div class="quiz-head">
+      <span class="qt">{{ .title }}</span>
+      <span class="qscore" data-quiz-score>문제 1 / {{ len .questions }}</span>
+    </div>
+    <div class="quiz-body" data-quiz-body></div>
+    <script type="application/json" data-quiz-data>
+      {{- dict "id" $id "title" .title "questions" .questions | jsonify | safeJS -}}
+    </script>
+    <noscript>
+      <ol class="quiz-static">
+        {{ range .questions }}<li>{{ .q }}</li>{{ end }}
+      </ol>
+    </noscript>
+  </section>
+</div>
+{{- else -}}
+<div class="block"><div class="callout warn">퀴즈 <code>{{ $id }}</code>를 찾지 못했다. <code>data/quizzes.yaml</code>을 확인하라.</div></div>
+{{- end -}}

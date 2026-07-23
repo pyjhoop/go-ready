@@ -1,0 +1,10 @@
+{{- /*
+  콜아웃 — 함정(warn) / 팁(tip) / 정보(info)
+  사용: {{< callout warn >}}본문 **마크다운** 가능{{< /callout >}}
+*/ -}}
+{{- $tone := .Get 0 | default "info" -}}
+<div class="block">
+  <div class="callout {{ $tone }}">
+    {{ .Inner | markdownify }}
+  </div>
+</div>

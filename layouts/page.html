@@ -1,0 +1,25 @@
+{{ define "main" }}
+<article class="lesson-view">
+  <nav class="breadcrumb">
+    <a href="{{ "/" | relURL }}">대시보드</a> ›
+    <a href="{{ "/learn/" | relURL }}">학습</a> ›
+    {{ .Params.moduleTitle }}
+  </nav>
+
+  <h1>{{ .Title }}</h1>
+  <div class="lesson-meta">
+    <span class="type-pill type-{{ .Params.type }}">{{ .Params.type }}</span>
+    <span class="est">⏱ 약 {{ .Params.estMin }}분</span>
+  </div>
+
+  {{ .Content }}
+
+  <footer class="lesson-footer">
+    <div class="pager">
+      {{ with .PrevInSection }}<a class="btn btn-ghost" href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ end }}
+      {{ with .NextInSection }}<a class="btn btn-ghost" href="{{ .RelPermalink }}">{{ .Title }} →</a>{{ end }}
+    </div>
+    <button class="complete-toggle" type="button" data-toggle="{{ .Params.lessonID }}">완료로 표시</button>
+  </footer>
+</article>
+{{ end }}

@@ -1,0 +1,17 @@
+{{- /*
+  대조 박스 — 이 프로젝트의 시그니처 UI
+  사용: {{< contrast from="Java" note="..." to="Go" goNote="..." >}}
+*/ -}}
+<div class="block">
+  <div class="contrast">
+    <div class="side from">
+      <div class="lang">{{ .Get "from" }}</div>
+      <div class="desc">{{ .Get "note" | markdownify }}</div>
+    </div>
+    <div class="arrow"><span>&rarr;</span></div>
+    <div class="side to">
+      <div class="lang">{{ .Get "to" | default "Go" }}</div>
+      <div class="desc">{{ .Get "goNote" | markdownify }}</div>
+    </div>
+  </div>
+</div>

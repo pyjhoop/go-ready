@@ -1,0 +1,17 @@
+<nav class="sidebar" id="sidebar" aria-label="모듈 네비게이션">
+  <a class="brand-mark" href="{{ "/" | relURL }}">
+    <span class="brand-gopher">Go</span>
+    <span>Go <span class="go">Ready</span></span>
+  </a>
+  <a class="nav-dash{{ if .IsHome }} active{{ end }}" href="{{ "/" | relURL }}">📋 대시보드</a>
+  <div class="nav-label">모듈</div>
+  {{ range where site.Sections "Section" "learn" }}
+    {{ range .Sections.ByWeight }}
+    <a class="nav-item{{ if eq $.Params.module .Params.module }} active{{ end }}" href="{{ .RelPermalink }}">
+      <span class="nav-step">{{ .Params.step }}</span>
+      <span class="nav-title">{{ .Title }}</span>
+      <span class="nav-check" data-module-check="{{ .Params.module }}">✓</span>
+    </a>
+    {{ end }}
+  {{ end }}
+</nav>

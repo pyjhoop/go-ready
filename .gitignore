@@ -1,0 +1,4 @@
+# Hugo 생성물 — 절대 커밋하지 않는다
+public/
+resources/
+.hugo_build.lock

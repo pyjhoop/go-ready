@@ -1,0 +1,38 @@
+{{ define "main" }}
+<div class="banner">
+  <h1>{{ site.Params.tagline }}</h1>
+  <p>{{ site.Params.description }}</p>
+</div>
+
+<div class="progress-header">
+  <div class="progress-top">
+    <span class="label">Go Readiness</span>
+    <span><span class="pct" data-progress-pct>0%</span><span class="count" data-progress-count></span></span>
+  </div>
+  <div class="bar"><span data-progress-bar style="width:0%"></span></div>
+</div>
+
+{{ range where site.Sections "Section" "learn" }}
+  {{ range .Sections.ByWeight }}
+  <div class="module-card open">
+    <div class="module-head">
+      <span class="step-badge">{{ .Params.step }}</span>
+      <div class="module-info">
+        <div class="t"><a href="{{ .RelPermalink }}">{{ .Title }}</a></div>
+        <div class="s">{{ .Params.summary }}</div>
+      </div>
+    </div>
+    <div class="lesson-list">
+      {{ range .Pages.ByWeight }}
+      <div class="lesson-row">
+        <button class="lesson-check" type="button" data-toggle="{{ .Params.lessonID }}" role="checkbox" aria-checked="false" aria-label="{{ .Title }} 완료 표시"></button>
+        <a class="lesson-open" href="{{ .RelPermalink }}"><span class="lt">{{ .Title }}</span></a>
+        <span class="type-pill type-{{ .Params.type }}">{{ .Params.type }}</span>
+        <span class="est">{{ .Params.estMin }}분</span>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+{{ end }}
+{{ end }}

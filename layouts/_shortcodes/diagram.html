@@ -1,0 +1,13 @@
+{{- /*
+  다이어그램 — 손으로 짠 인라인 SVG를 빌드 시점에 페이지로 구워 넣는다.
+  런타임 렌더링(Mermaid 등)이 아니라 정적 SVG라 브라우저 비용이 0에 가깝다.
+  사용: {{< diagram id="slice-internals" caption="..." >}}
+*/ -}}
+{{- $id := .Get "id" -}}
+{{- $caption := .Get "caption" -}}
+<div class="block">
+  <figure class="diagram-wrap">
+    {{ partial (printf "diagrams/%s.html" $id) . }}
+    {{ with $caption }}<figcaption class="diagram-cap">{{ . }}</figcaption>{{ end }}
+  </figure>
+</div>
